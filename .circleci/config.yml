@@ -142,16 +142,16 @@ workflows:
   build_test_deploy:
     jobs:
       - build_debug
-      - build_release:
-          requires:
-            - build_debug
-      - check:
-          requires:
-            - build_debug
-      - deploy_to_play:
-          requires:
-            - check
-            - build_release
-          filters:
-            branches:
-              only: master
+#      - build_release:
+#          requires:
+#            - build_debug
+#      - check:
+#          requires:
+#            - build_debug
+#      - deploy_to_play:
+#          requires:
+#            - check
+#            - build_release
+#          filters:
+#            branches:
+#              only: master
