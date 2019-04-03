@@ -135,7 +135,7 @@ jobs:
       - run:
           name: Deploy to Alpha channel
           command: ./gradlew publishRelease -Ppunk.versioncode=$CIRCLE_BUILD_NUM
-      - <<: *clean_secrets
+#      - <<: *clean_secrets
 
 workflows:
   version: 2
