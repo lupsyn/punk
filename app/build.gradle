@@ -1,0 +1,90 @@
+import app.punk.buildsrc.Libs
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+kapt {
+    correctErrorTypes = true
+}
+apply plugin: 'kotlin-android-extensions'
+androidExtensions {
+    experimental = true
+}
+
+def appVersionCode = propOrDef("punk.versioncode", 0) as Integer
+println("APK version code: " + appVersionCode)
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "app.punk"
+        minSdkVersion buildConfig.minSdk
+        targetSdkVersion buildConfig.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        // Disable lintVital. Not needed since lint is run on CI
+        checkReleaseBuilds false
+        // Allow lint to check dependencies
+        checkDependencies true
+        // Ignore any tests
+        ignoreTestSources true
+
+        disable 'GradleCompatible', 'FontValidationError'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    packagingOptions {
+        // Exclude AndroidX version files
+        exclude 'META-INF/*.version'
+        // Exclude consumer proguard files
+        exclude 'META-INF/proguard/*'
+        // Exclude the Firebase/Fabric/other random properties files
+        exclude '/*.properties'
+        exclude 'fabric/*.properties'
+        exclude 'META-INF/*.properties'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation Libs.Kotlin.stdlib
+
+    implementation Libs.AndroidX.appcompat
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.constraintlayout
+
+    implementation Libs.Google.material
+    implementation Libs.Google.firebaseCore
+    implementation Libs.Google.crashlytics
+
+    testImplementation Libs.junit
+    testImplementation Libs.robolectric
+    testImplementation Libs.mockitoKotlin
+    testImplementation Libs.AndroidX.Test.core
+    testImplementation Libs.AndroidX.Test.runner
+    testImplementation Libs.AndroidX.Test.rules
+    testImplementation Libs.AndroidX.Test.espressoCore
+}
