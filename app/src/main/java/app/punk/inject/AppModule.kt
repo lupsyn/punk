@@ -20,7 +20,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCoroutineDispatchers(schedulers: AppSchedulers) = AppCoroutineDispatchers(
+    fun provideCoroutinesDispatchers(schedulers: AppSchedulers) = AppCoroutineDispatchers(
         io = schedulers.io.asCoroutineDispatcher(),
         computation = schedulers.computation.asCoroutineDispatcher(),
         main = Dispatchers.Main
