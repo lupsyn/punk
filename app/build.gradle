@@ -73,8 +73,14 @@ dependencies {
     implementation Libs.Kotlin.stdlib
 
     implementation Libs.AndroidX.appcompat
-    implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.constraintlayout
+
+    implementation Libs.AndroidX.coreKtx
+
+    implementation Libs.AndroidX.Fragment.fragmentKtx
+    implementation Libs.AndroidX.Navigation.runtime
+    implementation Libs.AndroidX.Navigation.fragment
+    implementation Libs.AndroidX.Navigation.ui
 
     implementation Libs.Google.material
     implementation Libs.Google.firebaseCore
@@ -87,4 +93,5 @@ dependencies {
     testImplementation Libs.AndroidX.Test.runner
     testImplementation Libs.AndroidX.Test.rules
     testImplementation Libs.AndroidX.Test.espressoCore
+
 }
