@@ -56,6 +56,7 @@ object Libs {
         val emoji = "androidx.emoji:emoji:1.0.0"
 
         object Navigation {
+            // Navigation
             private const val version = "2.0.0"
             val runtime = "androidx.navigation:navigation-runtime-ktx:$version"
             val fragment = "androidx.navigation:navigation-fragment-ktx:$version"

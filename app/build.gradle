@@ -69,14 +69,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":base")
 
     implementation Libs.Kotlin.stdlib
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.rx2
+    implementation Libs.Coroutines.android
 
     implementation Libs.AndroidX.appcompat
     implementation Libs.AndroidX.constraintlayout
-
     implementation Libs.AndroidX.coreKtx
-
     implementation Libs.AndroidX.Fragment.fragmentKtx
     implementation Libs.AndroidX.Navigation.runtime
     implementation Libs.AndroidX.Navigation.fragment
@@ -85,6 +87,12 @@ dependencies {
     implementation Libs.Google.material
     implementation Libs.Google.firebaseCore
     implementation Libs.Google.crashlytics
+
+    implementation Libs.Dagger.androidSupport
+    kapt Libs.Dagger.compiler
+    kapt Libs.Dagger.androidProcessor
+
+    implementation Libs.timber
 
     testImplementation Libs.junit
     testImplementation Libs.robolectric
