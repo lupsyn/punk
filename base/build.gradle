@@ -1,0 +1,12 @@
+import app.punk.buildsrc.Libs
+
+apply plugin: 'kotlin'
+
+dependencies {
+    compile Libs.Kotlin.stdlib
+
+    compile Libs.Coroutines.core
+    compile Libs.Coroutines.rx2
+
+    compile Libs.Dagger.dagger
+}

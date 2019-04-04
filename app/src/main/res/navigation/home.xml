@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/home"
+        app:startDestination="@+id/homeScreen">
+
+    <fragment
+            android:id="@+id/homeScreen"
+            android:name="app.punk.home.Home"
+            android:label="@string/title_home"
+            tools:layout="@layout/home">
+        <action
+                android:id="@+id/action_title_to_about"
+                app:destination="@id/detailsScreen"/>
+    </fragment>
+    <fragment
+            android:id="@+id/detailsScreen"
+            android:name="app.punk.home.Details"
+            android:label="@string/title_details"
+            tools:layout="@layout/details"/>
+</navigation>
+
