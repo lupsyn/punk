@@ -5,7 +5,7 @@ import com.crashlytics.android.Crashlytics
 import timber.log.Timber
 import javax.inject.Inject
 
-class TiviLogger @Inject constructor() : Logger {
+class PunkLogger @Inject constructor() : Logger {
     fun setup(debugMode: Boolean) {
         if (debugMode) {
             Timber.plant(Timber.DebugTree())
