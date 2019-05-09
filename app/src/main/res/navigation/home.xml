@@ -9,7 +9,7 @@
 
     <fragment
             android:id="@+id/homeScreen"
-            android:name="app.punk.home.Home"
+            android:name="app.punk.home.HomeFragment"
             android:label="@string/title_home"
             tools:layout="@layout/home">
         <action

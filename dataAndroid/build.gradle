@@ -1,0 +1,67 @@
+import app.punk.buildsrc.Libs
+
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+
+            all {
+                minHeapSize = "64m"
+                maxHeapSize = "128m"
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation project(":base")
+    implementation project(":data")
+
+    api Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.rxjava2
+    kapt Libs.AndroidX.Room.compiler
+
+    implementation Libs.AndroidX.Paging.runtime
+
+    testImplementation Libs.junit
+    testImplementation Libs.robolectric
+    testImplementation Libs.mockitoKotlin
+
+    testImplementation Libs.AndroidX.archCoreTesting
+    testImplementation Libs.AndroidX.Test.core
+
+    // Needed for Tzdb
+    testImplementation Libs.threeTenBp
+    // Needed for Main dispatcher to work
+    testImplementation Libs.Coroutines.android
+}

@@ -1,0 +1,7 @@
+import app.punk.buildsrc.Libs
+
+apply plugin: 'kotlin'
+
+dependencies {
+    compile project(":base")
+}

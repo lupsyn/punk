@@ -1,1 +1,1 @@
-include ':app', ':buildSrc', ':base'
+include ':app', ':buildSrc', ':base', ':data', ':datasources', ':interactors', ':dataAndroid'

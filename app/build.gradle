@@ -70,13 +70,26 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":base")
+    implementation project(":data")
+    implementation project(":interactors")
+    implementation project(":dataAndroid")
 
     implementation Libs.Kotlin.stdlib
     implementation Libs.Coroutines.core
     implementation Libs.Coroutines.rx2
     implementation Libs.Coroutines.android
 
+    implementation Libs.AndroidX.Lifecycle.extensions
+    implementation Libs.AndroidX.Lifecycle.reactive
+    kapt Libs.AndroidX.Lifecycle.compiler
+
+    implementation Libs.AndroidX.Paging.runtime
+    implementation Libs.AndroidX.Paging.rxjava2
+
     implementation Libs.AndroidX.appcompat
+    implementation Libs.AndroidX.browser
+    implementation Libs.AndroidX.palette
+    implementation Libs.AndroidX.recyclerview
     implementation Libs.AndroidX.constraintlayout
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Fragment.fragmentKtx
@@ -84,13 +97,16 @@ dependencies {
     implementation Libs.AndroidX.Navigation.fragment
     implementation Libs.AndroidX.Navigation.ui
 
+    implementation Libs.RxJava.rxJava
+    implementation Libs.RxJava.rxKotlin
+    implementation Libs.RxJava.rxAndroid
+
+    implementation Libs.Retrofit.gsonConverter
+    implementation Libs.Retrofit.retrofit_rxjava_adapter
+
     implementation Libs.Google.material
     implementation Libs.Google.firebaseCore
     implementation Libs.Google.crashlytics
-
-    implementation Libs.Dagger.androidSupport
-    kapt Libs.Dagger.compiler
-    kapt Libs.Dagger.androidProcessor
 
     implementation Libs.timber
 

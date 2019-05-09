@@ -8,5 +8,7 @@ dependencies {
     compile Libs.Coroutines.core
     compile Libs.Coroutines.rx2
 
-    compile Libs.Dagger.dagger
+    compile Libs.Retrofit.retrofit
+    compile Libs.OkHttp.loggingInterceptor
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
 }

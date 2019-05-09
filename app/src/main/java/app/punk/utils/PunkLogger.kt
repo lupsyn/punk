@@ -3,9 +3,8 @@ package app.punk.utils
 import app.punk.util.Logger
 import com.crashlytics.android.Crashlytics
 import timber.log.Timber
-import javax.inject.Inject
 
-class PunkLogger @Inject constructor() : Logger {
+class PunkLogger : Logger {
     fun setup(debugMode: Boolean) {
         if (debugMode) {
             Timber.plant(Timber.DebugTree())
