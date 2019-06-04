@@ -14,6 +14,8 @@ import app.punk.api.Status
 import app.punk.data.ExternalEntry
 import app.punk.data.resultentities.EntryWithBeers
 import app.punk.extensions.observeNotNull
+import app.punk.home.HomeViewModel
+import app.punk.home.HomeViewModelFactory
 import app.punk.ui.ProgressTimeLatch
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_rv.*
@@ -32,7 +34,12 @@ abstract class EntryFragment<LI : EntryWithBeers<out ExternalEntry>, VM : EntryV
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(vmClass)
+
+        if (vmClass == HomeViewModel::class.java) {
+            viewModel = (HomeViewModelFactory(BeerInteractorModule.provideBeerInteractor()).create(vmClass) as VM)
+        } else {
+            viewModel = ViewModelProviders.of(this, viewModelFactory).get(vmClass)
+        }
 
 //        controller = createController()
 //        controller.callbacks = object : EntryGridEpoxyController.Callbacks<LI> {

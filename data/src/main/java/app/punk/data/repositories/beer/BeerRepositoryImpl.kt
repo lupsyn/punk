@@ -1,16 +1,11 @@
 package app.punk.data.repositories.beer
 
 import app.punk.data.entities.Beer
-import app.punk.util.AppCoroutineDispatchers
 import kotlinx.coroutines.coroutineScope
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class BeerRepositoryImpl @Inject constructor(
-    private val beerStore: BeerStore
-) : BeerRepository {
-    //TODO : fix this as it's circular dependecy
+
+class BeerRepositoryImpl constructor(private val beerStore: BeerStore) : BeerRepository {
+
     override fun getIdOrSavePlaceholder(show: Beer): Int {
         return beerStore.getIdOrSavePlaceholder(show).toInt()
     }
@@ -26,7 +21,7 @@ class BeerRepositoryImpl @Inject constructor(
 
     override fun needsUpdate(externalApiId: Int): Boolean {
         return true
-//        beerStore.lastRequestBefore(showId, Period.ofDays(7))
+        // beerStore.lastRequestBefore(showId, Period.ofDays(7))
     }
 
     override suspend fun updateBeer(externalApiId: Int) = coroutineScope {

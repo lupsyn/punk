@@ -1,24 +1,19 @@
 package app.punk.home
 
 import app.punk.data.resultentities.EntryWithPaginatedBeers
+import app.punk.inject.AppModule
 import app.punk.interactors.UpdateBeersInteractor
 import app.punk.interactors.launchInteractor
-import app.punk.util.AppCoroutineDispatchers
-import app.punk.util.AppSchedulers
-import app.punk.util.Logger
 import app.punk.utils.EntryViewModel
 import kotlinx.coroutines.coroutineScope
 
 class HomeViewModel constructor(
-    schedulers: AppSchedulers,
-    dispatchers: AppCoroutineDispatchers,
-    private val interactor: UpdateBeersInteractor,
-    logger: Logger
+     private val interactor: UpdateBeersInteractor
 ) : EntryViewModel<EntryWithPaginatedBeers>(
-    schedulers,
-    dispatchers,
+    AppModule.provideRxSchedulers(),
+    AppModule.provideCoroutinesDispatchers(),
     interactor.dataSourceFactory(),
-    logger
+    AppModule.provideLogger()
 ) {
     override suspend fun callLoadMore() = coroutineScope {
         launchInteractor(interactor, UpdateBeersInteractor.ExecuteParams(UpdateBeersInteractor.Page.NEXT_PAGE)).join()

@@ -1,7 +1,7 @@
 package app.punk.buildsrc
 
 object Libs {
-    val androidGradlePlugin = "com.android.tools.build:gradle:3.4.0-rc03"
+    val androidGradlePlugin = "com.android.tools.build:gradle:3.4.1"
     val dexcountGradlePlugin = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6"
     val playPublisherPlugin = "com.github.triplet.gradle:play-publisher:2.1.0"
 
@@ -100,7 +100,7 @@ object Libs {
         }
 
         object Room {
-            private const val version = "2.0.0"
+            private const val version = "2.1.0-rc01"
             val common = "androidx.room:room-common:$version"
             val runtime = "androidx.room:room-runtime:$version"
             val rxjava2 = "androidx.room:room-rxjava2:$version"

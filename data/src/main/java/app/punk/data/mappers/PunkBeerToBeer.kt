@@ -1,12 +1,10 @@
 package app.punk.data.mappers
 
 import app.punk.data.entities.Beer
-import javax.inject.Inject
-import javax.inject.Singleton
+import app.punk.datasources.entities.PunkBeer
 
-@Singleton
-class PunkBeerToBeer @Inject constructor() : Mapper<app.punk.datasources.entities.PunkBeer, Beer> {
-    override fun map(from: app.punk.datasources.entities.PunkBeer) = Beer(
+class PunkBeerToBeer : Mapper<PunkBeer, Beer> {
+    override fun map(from: PunkBeer) = Beer(
         externalApiId = from.id,
         name = from.name,
         tagline = from.tagline,

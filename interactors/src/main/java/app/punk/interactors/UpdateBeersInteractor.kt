@@ -13,8 +13,7 @@ class UpdateBeersInteractor  constructor(
     dispatchers: AppCoroutineDispatchers,
     private val schedulers: AppSchedulers,
     private val paginatedBeerRepository: PaginatedBeerRepository
-) : PagingInteractor<EntryWithPaginatedBeers>,
-    SubjectInteractor<Unit, UpdateBeersInteractor.ExecuteParams, List<EntryWithPaginatedBeers>>() {
+) : PagingInteractor<EntryWithPaginatedBeers>, SubjectInteractor<Unit, UpdateBeersInteractor.ExecuteParams, List<EntryWithPaginatedBeers>>() {
     override val dispatcher: CoroutineDispatcher = dispatchers.io
 
     init {

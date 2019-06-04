@@ -17,23 +17,24 @@ import java.io.File
 
 object AppModule {
 
-    fun provideContext(application: PunkApplication): Context = application.applicationContext
 
-    fun provideCoroutinesDispatchers() {
+    fun provideApplicationContext(): Context = PunkApplication.app
+
+    fun provideCoroutinesDispatchers(): AppCoroutineDispatchers {
         val schedulers = provideRxSchedulers()
-        AppCoroutineDispatchers(
+        return AppCoroutineDispatchers(
             io = schedulers.io.asCoroutineDispatcher(),
             computation = schedulers.computation.asCoroutineDispatcher(),
             main = Dispatchers.Main
         )
     }
 
-    fun provideCache(application: PunkApplication): Cache =
+    fun provideCache(application: Context): Cache =
         Cache(File(application.cacheDir, "app_module_cache"), 10 * 1024 * 1024)
 
     fun provideCompositeDisposable() = CompositeDisposable()
 
-    private fun provideRxSchedulers(): AppSchedulers = AppSchedulers(
+    fun provideRxSchedulers(): AppSchedulers = AppSchedulers(
         io = Schedulers.io(),
         computation = Schedulers.computation(),
         main = AndroidSchedulers.mainThread()

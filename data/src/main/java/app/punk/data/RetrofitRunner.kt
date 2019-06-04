@@ -9,7 +9,7 @@ import app.punk.extensions.isFromNetwork
 import app.punk.extensions.toException
 import retrofit2.Response
 
-class RetrofitRunner constructor() {
+class RetrofitRunner {
     suspend fun <T, E> executeForResponse(mapper: Mapper<T, E>, request: suspend () -> Response<T>): Result<E> {
         return try {
             val response = request()

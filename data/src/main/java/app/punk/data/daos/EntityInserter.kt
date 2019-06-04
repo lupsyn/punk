@@ -2,12 +2,9 @@ package app.punk.data.daos
 
 import app.punk.data.DatabaseTransactionRunner
 import app.punk.data.entities.BeerEntity
-import app.punk.util.Logger
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class EntityInserter @Inject constructor(
+
+class EntityInserter constructor(
     private val transactionRunner: DatabaseTransactionRunner
 ) {
     fun <E : BeerEntity> insertOrUpdate(dao: BeerEntityDao<E>, entities: List<E>) = transactionRunner {

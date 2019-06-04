@@ -1,7 +1,7 @@
-package app.punk
+package app.punk.inject
 
+import android.content.Context
 import app.punk.datasources.services.PunkBeerService
-import app.punk.inject.AppModule
 import com.google.gson.Gson
 import okhttp3.Cache
 import okhttp3.HttpUrl
@@ -17,18 +17,18 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    fun providePunkBeerService(retrofit: Retrofit): PunkBeerService = retrofit.create(PunkBeerService::class.java)
+    fun providePunkBeerService(): PunkBeerService = provideRetrofitAdapter(AppModule.provideApplicationContext()).create(PunkBeerService::class.java)
 
-    fun provideRetrofit(application: PunkApplication): Retrofit {
+    fun provideRetrofitAdapter(context: Context): Retrofit {
         return Retrofit.Builder()
             .baseUrl(provideEndpoint())
             .addConverterFactory(provideGsonConverterFactory())
             .addCallAdapterFactory(provideRxJavaCallAdapterFactory())
-            .client(provideOkHttpClient(AppModule.provideCache(application)))
+            .client(provideOkHttpClient(AppModule.provideCache(context)))
             .build()
     }
 
-    private fun getBaseUrl(): String = "https://api.punkapi.com/v2"
+    private fun getBaseUrl(): String = "https://api.punkapi.com/"
 
     private fun provideEndpoint(): HttpUrl = HttpUrl.parse(getBaseUrl())!!
 
