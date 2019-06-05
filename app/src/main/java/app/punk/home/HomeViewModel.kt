@@ -8,12 +8,12 @@ import app.punk.utils.EntryViewModel
 import kotlinx.coroutines.coroutineScope
 
 class HomeViewModel constructor(
-     private val interactor: UpdateBeersInteractor
+    private val interactor: UpdateBeersInteractor
 ) : EntryViewModel<EntryWithPaginatedBeers>(
-    AppModule.provideRxSchedulers(),
-    AppModule.provideCoroutinesDispatchers(),
+    AppModule.rxSchedulers,
+    AppModule.coroutineDispatchers,
     interactor.dataSourceFactory(),
-    AppModule.provideLogger()
+    AppModule.logger
 ) {
     override suspend fun callLoadMore() = coroutineScope {
         launchInteractor(interactor, UpdateBeersInteractor.ExecuteParams(UpdateBeersInteractor.Page.NEXT_PAGE)).join()

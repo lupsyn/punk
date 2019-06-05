@@ -5,7 +5,6 @@ import app.punk.BuildConfig
 import app.punk.PunkApplication
 import app.punk.util.AppCoroutineDispatchers
 import app.punk.util.AppSchedulers
-import app.punk.util.Logger
 import app.punk.utils.PunkLogger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,36 +16,27 @@ import java.io.File
 
 object AppModule {
 
+    val applicationContext: Context = PunkApplication.app
 
-    fun provideApplicationContext(): Context = PunkApplication.app
-
-    fun provideCoroutinesDispatchers(): AppCoroutineDispatchers {
-        val schedulers = provideRxSchedulers()
-        return AppCoroutineDispatchers(
-            io = schedulers.io.asCoroutineDispatcher(),
-            computation = schedulers.computation.asCoroutineDispatcher(),
+    val coroutineDispatchers by lazy {
+        AppCoroutineDispatchers(
+            io = rxSchedulers.io.asCoroutineDispatcher(),
+            computation = rxSchedulers.computation.asCoroutineDispatcher(),
             main = Dispatchers.Main
         )
     }
 
-    fun provideCache(application: Context): Cache =
-        Cache(File(application.cacheDir, "app_module_cache"), 10 * 1024 * 1024)
+    val cache: Cache = Cache(File(applicationContext.cacheDir, "app_module_cache"), 10 * 1024 * 1024)
 
-    fun provideCompositeDisposable() = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
-    fun provideRxSchedulers(): AppSchedulers = AppSchedulers(
+    val rxSchedulers: AppSchedulers = AppSchedulers(
         io = Schedulers.io(),
         computation = Schedulers.computation(),
         main = AndroidSchedulers.mainThread()
     )
 
-    fun provideLogger(): Logger {
-        return PunkLogger()
-    }
+    val logger by lazy { PunkLogger() }
 
-    fun provideTimberInitializer() {
-        val tiviLogger = PunkLogger()
-        tiviLogger.setup(BuildConfig.DEBUG)
-    }
-
+    fun initTimber() = logger.setup(BuildConfig.DEBUG)
 }

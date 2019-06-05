@@ -11,7 +11,7 @@ object DatabaseModule {
     private val db: PunkDatabase by lazy { initDatabase() }
 
     private fun initDatabase(): PunkDatabase {
-        val builder = Room.databaseBuilder(AppModule.provideApplicationContext(), PunkDatabase::class.java, "shows.db")
+        val builder = Room.databaseBuilder(AppModule.applicationContext, PunkDatabase::class.java, "shows.db")
             .fallbackToDestructiveMigration()
         if (Debug.isDebuggerConnected()) {
             builder.allowMainThreadQueries()
@@ -19,9 +19,9 @@ object DatabaseModule {
         return builder.build()
     }
 
-    fun provideBeerDao() = db.beerDao()
+    val beerDao by lazy { db.beerDao() }
 
-    fun providePaginatedBeerDao() = db.paginatedBeerDao()
+    val paginatedBeerDao by lazy { db.paginatedBeerDao() }
 
-    fun provideDatabaseTransactionRunner(): DatabaseTransactionRunner = RoomTransactionRunner(db)
+    val databaseTransactionRunner by lazy { RoomTransactionRunner(db) }
 }

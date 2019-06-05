@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import app.punk.interactors.UpdateBeersInteractor
 
 class HomeViewModelFactory(
-    val interactor: UpdateBeersInteractor
+    private val interactor: UpdateBeersInteractor
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

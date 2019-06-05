@@ -7,13 +7,11 @@ class PunkApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppModule.provideTimberInitializer()
         app = this
+        AppModule.initTimber()
     }
 
     companion object {
         lateinit var app: PunkApplication
     }
-
-
 }

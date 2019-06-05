@@ -7,34 +7,38 @@ import app.punk.inject.DatabaseModule
 
 object BeerModule {
 
-
-    fun providePaginatedBeerRepository()= PaginatedBeerRepository(
-        providePaginatedBeerStore(),
-        providePunkBeerDataSource(),
-        provideBeerRepository()
+    val paginatedBeerRepository by lazy {
+        PaginatedBeerRepository(
+            paginatedBeerStore,
+            punkBeerDataSource,
+            beerRepositoryImpl
         )
+    }
 
-    fun provideBeerRepository() = BeerRepositoryImpl(provideBeerStore())
+    private val beerRepositoryImpl by lazy { BeerRepositoryImpl(beerStore) }
 
-    fun providePaginatedBeerStore() = PaginatedBeerStore(
-        DatabaseModule.provideDatabaseTransactionRunner(),
-        DatabaseModule.providePaginatedBeerDao()
-    )
+    private val paginatedBeerStore by lazy {
+        PaginatedBeerStore(
+            DatabaseModule.databaseTransactionRunner,
+            DatabaseModule.paginatedBeerDao
+        )
+    }
 
-    fun providePunkBeerDataSource() = PunkBeerDataSource(
-        providePunkBeerToBeerMapper(),
-        RetrofitRunner(),
-        NetworkModule.providePunkBeerService()
-    )
+    private val punkBeerDataSource by lazy {
+        PunkBeerDataSource(
+            punkBeerToBeerMapper,
+            RetrofitRunner(),
+            NetworkModule.punkBeerService
+        )
+    }
 
-    private fun providePunkBeerToBeerMapper() = PunkBeerToBeer()
+    private val punkBeerToBeerMapper by lazy { PunkBeerToBeer() }
 
-    private fun provideBeerStore() = BeerStore(
-        EntityInserter(
-            DatabaseModule.provideDatabaseTransactionRunner()
-        ),
-        DatabaseModule.provideBeerDao(),
-        DatabaseModule.provideDatabaseTransactionRunner()
-    )
-
+    private val beerStore by lazy {
+        BeerStore(
+            EntityInserter(DatabaseModule.databaseTransactionRunner),
+            DatabaseModule.beerDao,
+            DatabaseModule.databaseTransactionRunner
+        )
+    }
 }

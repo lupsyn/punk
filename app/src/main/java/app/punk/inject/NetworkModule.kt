@@ -1,6 +1,5 @@
 package app.punk.inject
 
-import android.content.Context
 import app.punk.datasources.services.PunkBeerService
 import com.google.gson.Gson
 import okhttp3.Cache
@@ -8,7 +7,6 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,39 +15,36 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    fun providePunkBeerService(): PunkBeerService = provideRetrofitAdapter(AppModule.provideApplicationContext()).create(PunkBeerService::class.java)
+    val punkBeerService by lazy { provideRetrofitAdapter().create(PunkBeerService::class.java) }
 
-    fun provideRetrofitAdapter(context: Context): Retrofit {
+    private fun provideRetrofitAdapter(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(provideEndpoint())
-            .addConverterFactory(provideGsonConverterFactory())
-            .addCallAdapterFactory(provideRxJavaCallAdapterFactory())
-            .client(provideOkHttpClient(AppModule.provideCache(context)))
+            .baseUrl(endpoint)
+            .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(rxJavaCallAdapterFactory)
+            .client(okHttpClient)
             .build()
     }
 
-    private fun getBaseUrl(): String = "https://api.punkapi.com/"
+    private val baseUrl by lazy { "https://api.punkapi.com/" }
 
-    private fun provideEndpoint(): HttpUrl = HttpUrl.parse(getBaseUrl())!!
+    private val endpoint by lazy { HttpUrl.parse(baseUrl)!! }
 
-    private fun provideGsonConverterFactory(): Converter.Factory = GsonConverterFactory.create(Gson())
+    private val gsonConverterFactory by lazy { GsonConverterFactory.create(Gson()) }
 
-    private fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
+    private val rxJavaCallAdapterFactory by lazy { RxJava2CallAdapterFactory.create() }
 
-    private fun provideOkHttpClient(cache: Cache): OkHttpClient {
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(provideHttpLoggingInterceptor())
-            .cache(cache)
-            .connectTimeout(200, TimeUnit.SECONDS)
-        okHttpClient.addInterceptor(provideHttpLoggingInterceptor())
-        return okHttpClient.build()
+    private val okHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .cache(AppModule.cache)
+            .connectTimeout(200, TimeUnit.SECONDS).build()
     }
 
-    private fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
+    private val httpLoggingInterceptor by lazy {
+        HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BASIC
         }
     }
-
 }
 

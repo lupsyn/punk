@@ -36,7 +36,7 @@ abstract class EntryFragment<LI : EntryWithBeers<out ExternalEntry>, VM : EntryV
         super.onCreate(savedInstanceState)
 
         if (vmClass == HomeViewModel::class.java) {
-            viewModel = (HomeViewModelFactory(BeerInteractorModule.provideBeerInteractor()).create(vmClass) as VM)
+            viewModel = (HomeViewModelFactory(BeerInteractorModule.beerInteractor).create(vmClass) as VM)
         } else {
             viewModel = ViewModelProviders.of(this, viewModelFactory).get(vmClass)
         }
