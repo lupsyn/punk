@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    val punkBeerService by lazy { provideRetrofitAdapter().create(PunkBeerService::class.java) }
+    val punkBeerService: PunkBeerService by lazy { provideRetrofitAdapter().create(PunkBeerService::class.java) }
 
     private fun provideRetrofitAdapter(): Retrofit {
         return Retrofit.Builder()

@@ -8,7 +8,6 @@ import app.punk.data.RoomTransactionRunner
 
 
 object DatabaseModule {
-    private val db: PunkDatabase by lazy { initDatabase() }
 
     private fun initDatabase(): PunkDatabase {
         val builder = Room.databaseBuilder(AppModule.applicationContext, PunkDatabase::class.java, "shows.db")
@@ -18,6 +17,8 @@ object DatabaseModule {
         }
         return builder.build()
     }
+
+    private val db: PunkDatabase by lazy { initDatabase() }
 
     val beerDao by lazy { db.beerDao() }
 
